@@ -6,8 +6,8 @@
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 	
 	<http pattern="/static/**" security="none" />
-	<http pattern="/TI_IMAGES/**" security="none" />
-	<http pattern="/TI_VIDEO/**" security="none" />
+	<http pattern="/IMAGES/**" security="none" />
+	<http pattern="/VIDEO/**" security="none" />
 	<!-- <http pattern="/*.json" security="none" /> -->
 	<http auto-config="false"  use-expressions="true">
 	<access-denied-handler error-page="/access-denied"/>

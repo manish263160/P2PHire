@@ -12,12 +12,12 @@
     <title>Login Page</title>
 
   <!-- Favicons-->
-  <link rel="icon" href="static/images/favicon/favicon_onlinelogo-32x32.png" sizes="32x32">
+  <link rel="icon" href="static/images/favicon/delivery_logo-32x32.png" sizes="32x32">
   <!-- Favicons-->
-  <link rel="apple-touch-icon-precomposed" href="static/images/favicon/favicon-onlinelogo-152x152.png">
+  <link rel="apple-touch-icon-precomposed" href="static/images/favicon/delivery_logo-151x152.png">
   <!-- For iPhone -->
   <meta name="msapplication-TileColor" content="#00bcd4">
-  <meta name="msapplication-TileImage" content="static/images/favicon/favicon-onlinelogo-152x152.png">
+  <meta name="msapplication-TileImage" content="static/images/favicon/delivery_logo-151x152.png">
   <!-- For Windows Phone -->
 
 
@@ -54,8 +54,8 @@
       <form action="${loginUrl }" class="login-form">
         <div class="row">
           <div class="input-field col s12 center">
-            <img src="static/images/onlineLogo.png" alt="" class="responsive-img valign profile-image-login">
-            <p class="center login-form-text">Hire Me | Login Page</p>
+            <img src="static/images/delivery_logo.png" alt="" class="responsive-img valign profile-image-login">
+            <p class="center login-form-text">My Delivery | Login Page</p>
           </div>
         </div>
         <div class="row margin">

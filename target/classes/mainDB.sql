@@ -1,46 +1,109 @@
+-- ----------------------------------------------------------------------------
+-- MySQL Workbench Migration
+-- Migrated Schemata: mydelivery
+-- Source Schemata: p2phire
+-- Created: Sun Jan 29 01:05:49 2017
+-- Workbench Version: 6.3.6
+-- ----------------------------------------------------------------------------
 
-create database p2pHire;
+SET FOREIGN_KEY_CHECKS = 0;
 
-CREATE TABLE `user` (
-	`user_id` bigint(20) NOT NULL,
-	`email` varchar(50) UNIQUE,
-	`password` varchar(50),
-	`name` varchar(100),
-	`gender` varchar(10),
-	`created_on` TIMESTAMP default CURRENT_TIMESTAMP,
-	`modified_on` TIMESTAMP default CURRENT_TIMESTAMP,
-	`modified_by` varchar(100),
-	PRIMARY KEY (`user_id`)
-);
+-- ----------------------------------------------------------------------------
+-- Schema mydelivery
+-- ----------------------------------------------------------------------------
+DROP SCHEMA IF EXISTS `mydelivery` ;
+CREATE SCHEMA IF NOT EXISTS `mydelivery` ;
 
-CREATE TABLE `user_profile` (
-	`profile_id` bigint(3) NOT NULL,
-	`type` varchar(50) NOT NULL,
-	PRIMARY KEY (`profile_id`)
-);
+-- ----------------------------------------------------------------------------
+-- Table mydelivery.cities_master
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydelivery`.`cities_master` (
+  `id` INT(11) NULL DEFAULT NULL,
+  `state_id` INT(11) NULL DEFAULT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  `status` INT(11) NULL DEFAULT NULL,
+  `created_on` DATETIME NULL DEFAULT NULL,
+  `created_by` TEXT NULL DEFAULT NULL,
+  `modified_on` DATETIME NULL DEFAULT NULL,
+  `modified_by` TEXT NULL DEFAULT NULL)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE `user_profile_relation` (
-	`user_id` bigint(3) NOT NULL,
-	`profile_id` bigint(3) NOT NULL
-);
+-- ----------------------------------------------------------------------------
+-- Table mydelivery.countries_master
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydelivery`.`countries_master` (
+  `id` BIGINT(20) NOT NULL,
+  `short_name` VARCHAR(5) NULL DEFAULT NULL,
+  `name` VARCHAR(150) NOT NULL,
+  `phone_country_code` VARCHAR(10) NOT NULL,
+  `status` TINYINT(3) NOT NULL DEFAULT '1',
+  `ceated_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ceated_by` VARCHAR(20) NULL DEFAULT NULL,
+  `modified_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by` VARCHAR(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-ALTER TABLE `user_profile_relation` ADD CONSTRAINT `user_profile_relation_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`);
+-- ----------------------------------------------------------------------------
+-- Table mydelivery.states_master
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydelivery`.`states_master` (
+  `id` INT(11) NULL DEFAULT NULL,
+  `country_id` INT(11) NULL DEFAULT NULL,
+  `name` TEXT NULL DEFAULT NULL,
+  `status` INT(11) NULL DEFAULT NULL,
+  `created_on` DATETIME NULL DEFAULT NULL,
+  `created_by` TEXT NULL DEFAULT NULL,
+  `modified_on` DATETIME NULL DEFAULT NULL,
+  `modified_by` TEXT NULL DEFAULT NULL)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-ALTER TABLE `user_profile_relation` ADD CONSTRAINT `user_profile_relation_fk1` FOREIGN KEY (`profile_id`) REFERENCES `user_profile`(`profile_id`);
+-- ----------------------------------------------------------------------------
+-- Table mydelivery.user
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydelivery`.`user` (
+  `user_id` BIGINT(20) NOT NULL,
+  `email` VARCHAR(50) NULL DEFAULT NULL,
+  `password` VARCHAR(50) NULL DEFAULT NULL,
+  `mobileNo` VARCHAR(20) NULL DEFAULT NULL,
+  `name` VARCHAR(100) NULL DEFAULT NULL,
+  `gender` VARCHAR(10) NULL DEFAULT NULL,
+  `status` TINYINT(3) NULL DEFAULT '0',
+  `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_by` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `email` (`email` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
---this is for insert in user_profile table------ 
-insert user_profile (profile_id,type) values (1,'USER');
-insert user_profile (profile_id,type) values (2,'ADMIN');
-insert user_profile (profile_id,type) values (3,'SUPERADMIN');
+-- ----------------------------------------------------------------------------
+-- Table mydelivery.user_profile
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydelivery`.`user_profile` (
+  `profile_id` BIGINT(3) NOT NULL,
+  `type` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`profile_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-
-
-insert user (user_id,email,password,name,gender) values (1,'manish263160@gmail.com',md5('password'),'manish','male');
-
-
-insert user_profile_relation (user_id,profile_id) values (1,1);
-insert user_profile_relation (user_id,profile_id) values (1,2);
-insert user_profile_relation (user_id,profile_id) values (1,3);
-
-
-alter table user add column status tinyint(3) default 0 after gender;
+-- ----------------------------------------------------------------------------
+-- Table mydelivery.user_profile_relation
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydelivery`.`user_profile_relation` (
+  `user_id` BIGINT(3) NOT NULL,
+  `profile_id` BIGINT(3) NOT NULL,
+  INDEX `user_profile_relation_fk0` (`user_id` ASC),
+  INDEX `user_profile_relation_fk1` (`profile_id` ASC),
+  CONSTRAINT `user_profile_relation_fk0`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydelivery`.`user` (`user_id`),
+  CONSTRAINT `user_profile_relation_fk1`
+    FOREIGN KEY (`profile_id`)
+    REFERENCES `mydelivery`.`user_profile` (`profile_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+SET FOREIGN_KEY_CHECKS = 1;
